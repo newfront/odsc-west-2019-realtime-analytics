@@ -58,7 +58,7 @@ Add the following key/values.
 2. **spark.redis.port** 6379
 
 Updated the following key/values
-1. **spark.cores.max** 4
+1. **spark.cores.max** 2
 2. **spark.executor.memory** 8g
 
 #### Update the Dependencies (under the dependencies section)
