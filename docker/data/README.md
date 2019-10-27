@@ -1,0 +1,1 @@
+### This directory is where your redis rdb will be stored as well as the data required to run the Workshop
