@@ -1,0 +1,325 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-26 23:40:22.944",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572132372737_1976062338",
+      "id": "20191026-232612_578621619",
+      "dateCreated": "2019-10-26 23:26:12.737",
+      "dateStarted": "2019-10-26 23:40:23.002",
+      "dateFinished": "2019-10-26 23:40:40.520",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nspark.sparkContext.getConf",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-26 23:40:40.603",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res1: org.apache.spark.SparkConf \u003d org.apache.spark.SparkConf@2e678b5f\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572132405834_-1423570007",
+      "id": "20191026-232645_1582262538",
+      "dateCreated": "2019-10-26 23:26:45.834",
+      "dateStarted": "2019-10-26 23:40:40.644",
+      "dateFinished": "2019-10-26 23:40:40.868",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval newSession \u003d SparkSession.builder().appName(\"redis-df\").master(\"local[*]\").config(\"spark.redis.host\", \"redis5\").config(\"spark.redis.port\", \"6379\").getOrCreate()",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-26 23:40:40.945",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "newSession: org.apache.spark.sql.SparkSession \u003d org.apache.spark.sql.SparkSession@518b4cd1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572132617902_-390831532",
+      "id": "20191026-233017_1085553568",
+      "dateCreated": "2019-10-26 23:30:17.902",
+      "dateStarted": "2019-10-26 23:40:40.975",
+      "dateFinished": "2019-10-26 23:40:42.249",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ncase class Person(name: String, age: Int)\n\nval personSeq \u003d Seq(Person(\"John\", 30), Person(\"Peter\", 45))\n\nval df \u003d newSession.createDataFrame(personSeq)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-26 23:40:42.276",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Person\npersonSeq: Seq[Person] \u003d List(Person(John,30), Person(Peter,45))\ndf: org.apache.spark.sql.DataFrame \u003d [name: string, age: int]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572132699701_1625829388",
+      "id": "20191026-233139_1881560976",
+      "dateCreated": "2019-10-26 23:31:39.701",
+      "dateStarted": "2019-10-26 23:40:42.330",
+      "dateFinished": "2019-10-26 23:40:44.521",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndf.write.format(\"org.apache.spark.sql.redis\").option(\"table\", \"person\").save()",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-26 23:40:44.547",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://zeppelin:4040/jobs/job?id\u003d0",
+            "http://zeppelin:4040/jobs/job?id\u003d1",
+            "http://zeppelin:4040/jobs/job?id\u003d2"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1572132737313_2019025115",
+      "id": "20191026-233217_71393659",
+      "dateCreated": "2019-10-26 23:32:17.313",
+      "dateStarted": "2019-10-26 23:40:44.574",
+      "dateFinished": "2019-10-26 23:40:48.489",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nnewSession.conf.get(\"spark.redis.host\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-26 23:40:48.495",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res3: String \u003d redis5\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572132769510_-906565239",
+      "id": "20191026-233249_755320142",
+      "dateCreated": "2019-10-26 23:32:49.510",
+      "dateStarted": "2019-10-26 23:40:48.540",
+      "dateFinished": "2019-10-26 23:40:48.732",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval rConf \u003d RedisConfig.fromSparkConf(newSession.sparkContext.getConf)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-26 23:40:49.047",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "rConf: com.redislabs.provider.redis.RedisConfig \u003d com.redislabs.provider.redis.RedisConfig@76c0cc3e\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572133001764_-193671393",
+      "id": "20191026-233641_1660190791",
+      "dateCreated": "2019-10-26 23:36:41.764",
+      "dateStarted": "2019-10-26 23:40:49.126",
+      "dateFinished": "2019-10-26 23:40:49.531",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-26 23:40:49.867",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1572133104999_-399461475",
+      "id": "20191026-233824_2071238334",
+      "dateCreated": "2019-10-26 23:38:24.999",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "spark1",
+  "id": "2EQ8YDM5K",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

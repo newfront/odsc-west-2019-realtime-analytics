@@ -1,0 +1,13 @@
+.DS_Store
+*/.DS_Store
+
+data/*
+logs/*
+.classpath
+.settings
+
+docker/spark-2.4.4
+docker/logs/*.log
+docker/logs/*.log.*
+docker/data/dump.rdb
+docker/data/*.json
