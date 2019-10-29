@@ -1,0 +1,175 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n### Unsupervised Learning with SparkML\n1. What do we want to look at?\n2. What patterns could be useful for say grouping top performing Authors\n3. How can we find the most popular Genre of books?",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 23:24:33.187",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eUnsupervised Learning with SparkML\u003c/h3\u003e\n\u003col\u003e\n  \u003cli\u003eWhat do we want to look at?\u003c/li\u003e\n  \u003cli\u003eWhat patterns could be useful for say grouping top performing Authors\u003c/li\u003e\n  \u003cli\u003eHow can we find the most popular Genre of books?\u003c/li\u003e\n\u003c/ol\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572391259326_119313189",
+      "id": "20191029-232059_1985645294",
+      "dateCreated": "2019-10-29 23:20:59.326",
+      "dateStarted": "2019-10-29 23:24:26.858",
+      "dateFinished": "2019-10-29 23:24:26.880",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport spark.implicits._\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nval books \u003d spark.read.parquet(\"/odsc/books_detailed_no_authors_genres.parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 23:30:01.762",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import spark.implicits._\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions._\nbooks: org.apache.spark.sql.DataFrame \u003d [averageRating: double, countryCode: string ... 14 more fields]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://zeppelin:4040/jobs/job?id\u003d152"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1572391466711_-491644328",
+      "id": "20191029-232426_739945890",
+      "dateCreated": "2019-10-29 23:24:26.712",
+      "dateStarted": "2019-10-29 23:30:01.857",
+      "dateFinished": "2019-10-29 23:30:20.674",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nbooks.printSchema",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 23:30:32.518",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- averageRating: double (nullable \u003d true)\n |-- countryCode: string (nullable \u003d true)\n |-- description: string (nullable \u003d true)\n |-- id: long (nullable \u003d true)\n |-- isEbook: boolean (nullable \u003d true)\n |-- isbn: string (nullable \u003d true)\n |-- isbn13: string (nullable \u003d true)\n |-- languageCode: string (nullable \u003d true)\n |-- numPages: long (nullable \u003d true)\n |-- publicationDay: long (nullable \u003d true)\n |-- publicationMonth: long (nullable \u003d true)\n |-- publicationYear: long (nullable \u003d true)\n |-- publisher: string (nullable \u003d true)\n |-- ratingsCount: long (nullable \u003d true)\n |-- ratingsDist: string (nullable \u003d true)\n |-- title: string (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572391801762_725508800",
+      "id": "20191029-233001_1972215698",
+      "dateCreated": "2019-10-29 23:30:01.762",
+      "dateStarted": "2019-10-29 23:30:32.561",
+      "dateFinished": "2019-10-29 23:30:37.372",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 23:31:09.367",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1572391832518_746626636",
+      "id": "20191029-233032_1865055107",
+      "dateCreated": "2019-10-29 23:30:32.518",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "ODSC/5-SparkML-Unsupervised",
+  "id": "2EQKQP1CV",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}

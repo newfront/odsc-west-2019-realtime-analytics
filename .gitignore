@@ -1,7 +1,6 @@
 .DS_Store
 */.DS_Store
 
-data/*
 logs/*
 .classpath
 .settings
@@ -11,3 +10,4 @@ docker/logs/*.log
 docker/logs/*.log.*
 docker/data/dump.rdb
 docker/data/*.json
+docker/data/*.parquet
