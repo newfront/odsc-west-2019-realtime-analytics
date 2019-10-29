@@ -1,23 +1,29 @@
 #!/bin/bash
 
 PWD=${PWD}
+DATA_DIR=${PWD}/data/
 SPARK_VERSION='2.4.4'
 DOCKER_COMPOSE_FILE='docker-compose-all.yaml'
 DOCKER_NETWORK_NAME='odsc-network'
+WINE_DATASET_COMPRESSED='winereviews.json.zip'
+BOOKS_DETAILED_COMPRESSED='books_detailed_etl_large.json.zip'
+BOOK_DATASET_COMPRESSED='goodreadsbooks.zip'
 
 function installSpark() {
+    echo "using curl to download spark 2.4.4"
+    mkdir ${PWD}/install
     curl -XGET http://mirror.cc.columbia.edu/pub/software/apache/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz > ${PWD}/install/spark-2.4.4.tgz
-    cd ${PWD}/install
-    tar -xvzf spark-2.4.4.tgz
-    rm spark-2.4.4.tgz
+    cd ${PWD}/install && tar -xvzf spark-2.4.4.tgz && rm spark-2.4.4.tgz
     mv spark-2.4.4-bin-hadoop2.7 ../spark-2.4.4
     cd ..
     echo "${PWD}"
 }
 
 function prepData() {
-    cd ${PWD}/data
-    unzip winereviews.json.zip
+    cd ${DATA_DIR}
+    unzip "${WINE_DATASET_COMPRESSED}"
+    unzip "${BOOK_DATASET_COMPRESSED}"
+    unzip "${BOOKS_DETAILED_COMPRESSED}"
     cd ..
     echo "${PWD}"
 }

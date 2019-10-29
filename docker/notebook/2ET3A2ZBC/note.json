@@ -1,0 +1,861 @@
+{
+  "paragraphs": [
+    {
+      "title": "Reload the GoodReads Books DataSet",
+      "text": "%spark\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._\nimport spark.implicits._\n\nval booksDDL: String \u003d \"`bookID` INT,`title` STRING,`authors` STRING,`average_rating` STRING,`isbn` STRING,`isbn13` STRING,`language_code` STRING,`num_pages` STRING,`ratings_count` INT,`text_reviews_count` INT\"\nval booksSchema \u003d StructType.fromDDL(booksDDL)\nval df \u003d spark.read\n    .format(\"csv\")\n    .option(\"delimiter\",\",\")\n    .option(\"header\", \"true\")\n    .option(\"inferSchema\", \"false\")\n    .schema(booksSchema)\n    .load(\"file:///odsc/books.csv\")\n    .toDF(\"bookID\",\"title\",\"authors\",\"average_rating\",\"isbn\",\"isbn13\",\"language_code\",\"num_pages\",\"ratings_count\",\"text_reviews_count\")\ndf.createOrReplaceTempView(\"books\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:51:33.961",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._\nimport spark.implicits._\nbooksDDL: String \u003d `bookID` INT,`title` STRING,`authors` STRING,`average_rating` STRING,`isbn` STRING,`isbn13` STRING,`language_code` STRING,`num_pages` STRING,`ratings_count` INT,`text_reviews_count` INT\nbooksSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(bookID,IntegerType,true), StructField(title,StringType,true), StructField(authors,StringType,true), StructField(average_rating,StringType,true), StructField(isbn,StringType,true), StructField(isbn13,StringType,true), StructField(language_code,StringType,true), StructField(num_pages,StringType,true), StructField(ratings_count,IntegerType,true), StructField(text_reviews_count,IntegerT..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572296097837_-1049566451",
+      "id": "20191028-205457_2007953720",
+      "dateCreated": "2019-10-28 20:54:57.837",
+      "dateStarted": "2019-10-29 22:51:34.028",
+      "dateFinished": "2019-10-29 22:51:49.825",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Simplify finding Missing Values",
+      "text": "%spark\ndef missingValues(df: DataFrame): DataFrame \u003d {\n    df.schema.map {\n        case StructField(name: String, _: StringType, _, _) \u003d\u003e\n            // will do isNull orEmpty check here - and count as missing values\n            (name, df.where(col(name).isNull.or(col(name).equalTo(\"\"))).count())\n        case StructField(name: String, _, _, _) \u003d\u003e\n            (name, df.where(col(name).isNull).count)\n    }.toDF(\"name\", \"missing\")\n}",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:51:49.828",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "missingValues: (df: org.apache.spark.sql.DataFrame)org.apache.spark.sql.DataFrame\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572297478115_735095780",
+      "id": "20191028-211758_1183307709",
+      "dateCreated": "2019-10-28 21:17:58.115",
+      "dateStarted": "2019-10-29 22:51:49.895",
+      "dateFinished": "2019-10-29 22:51:54.925",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval missingValuesDF \u003d df.transform(missingValues)\nmissingValuesDF.show(true)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:51:54.959",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------------+-------+\n|              name|missing|\n+------------------+-------+\n|            bookID|      0|\n|             title|      0|\n|           authors|      0|\n|    average_rating|      0|\n|              isbn|      0|\n|            isbn13|      0|\n|     language_code|      0|\n|         num_pages|      0|\n|     ratings_count|      0|\n|text_reviews_count|      0|\n+------------------+-------+\n\nmissingValuesDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [name: string, missing: bigint]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://zeppelin:4040/jobs/job?id\u003d80",
+            "http://zeppelin:4040/jobs/job?id\u003d81",
+            "http://zeppelin:4040/jobs/job?id\u003d82",
+            "http://zeppelin:4040/jobs/job?id\u003d83",
+            "http://zeppelin:4040/jobs/job?id\u003d84",
+            "http://zeppelin:4040/jobs/job?id\u003d85",
+            "http://zeppelin:4040/jobs/job?id\u003d86",
+            "http://zeppelin:4040/jobs/job?id\u003d87",
+            "http://zeppelin:4040/jobs/job?id\u003d88",
+            "http://zeppelin:4040/jobs/job?id\u003d89"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1572297516087_1568892013",
+      "id": "20191028-211836_954293158",
+      "dateCreated": "2019-10-28 21:18:36.088",
+      "dateStarted": "2019-10-29 22:51:55.246",
+      "dateFinished": "2019-10-29 22:52:05.103",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Simplify finding Distinct Values",
+      "text": "%spark\ndef distinctColumnValues(df: DataFrame): DataFrame \u003d {\n    df.schema.map { r \u003d\u003e\n      (r.name, df.where(col(r.name).isNotNull)\n        .select(col(r.name))\n        .distinct()\n        .count())\n    }.toDF(\"name\", \"distinct\")\n}",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:52:05.180",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "distinctColumnValues: (df: org.apache.spark.sql.DataFrame)org.apache.spark.sql.DataFrame\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572297562783_-1718513928",
+      "id": "20191028-211922_657279969",
+      "dateCreated": "2019-10-28 21:19:22.784",
+      "dateStarted": "2019-10-29 22:52:05.268",
+      "dateFinished": "2019-10-29 22:52:09.682",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval distinctValuesDF \u003d df.transform(distinctColumnValues)\ndistinctValuesDF.show(true)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:52:09.710",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------------+--------+\n|              name|distinct|\n+------------------+--------+\n|            bookID|   13719|\n|             title|   12427|\n|           authors|    7605|\n|    average_rating|     221|\n|              isbn|   13719|\n|            isbn13|   13719|\n|     language_code|      35|\n|         num_pages|    1092|\n|     ratings_count|    6030|\n|text_reviews_count|    2025|\n+------------------+--------+\n\ndistinctValuesDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [name: string, distinct: bigint]\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://zeppelin:4040/jobs/job?id\u003d90",
+            "http://zeppelin:4040/jobs/job?id\u003d91",
+            "http://zeppelin:4040/jobs/job?id\u003d92",
+            "http://zeppelin:4040/jobs/job?id\u003d93",
+            "http://zeppelin:4040/jobs/job?id\u003d94",
+            "http://zeppelin:4040/jobs/job?id\u003d95",
+            "http://zeppelin:4040/jobs/job?id\u003d96",
+            "http://zeppelin:4040/jobs/job?id\u003d97",
+            "http://zeppelin:4040/jobs/job?id\u003d98",
+            "http://zeppelin:4040/jobs/job?id\u003d99"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1572297614798_-2012806089",
+      "id": "20191028-212014_1541440365",
+      "dateCreated": "2019-10-28 21:20:14.798",
+      "dateStarted": "2019-10-29 22:52:09.787",
+      "dateFinished": "2019-10-29 22:52:51.197",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndef columnStats(df: DataFrame) \u003d {\n    df.schema.map { r \u003d\u003e\n     val colStats \u003d df.select(col(r.name)).describe()\n     /*val colStats \u003d df.select(col(r.name)).where(col(r.name).isNotNull).describe()*/\n     colStats.show()\n    }\n}",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:52:51.259",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "columnStats: (df: org.apache.spark.sql.DataFrame)Seq[Unit]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572297649294_1217489344",
+      "id": "20191028-212049_1743638308",
+      "dateCreated": "2019-10-28 21:20:49.295",
+      "dateStarted": "2019-10-29 22:52:51.355",
+      "dateFinished": "2019-10-29 22:52:56.047",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ncolumnStats(df)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:52:56.113",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+------------------+\n|summary|            bookID|\n+-------+------------------+\n|  count|             13719|\n|   mean|22160.579269626065|\n| stddev|13699.603351218657|\n|    min|                 1|\n|    max|             47709|\n+-------+------------------+\n\n+-------+--------------------+\n|summary|               title|\n+-------+--------------------+\n|  count|               13719|\n|   mean|              1900.8|\n| stddev|  113.92629196107458|\n|    min|  said the shotgu...|\n|    max|魔戒首部曲：魔戒現身|\n+-------+--------------------+\n\n+-------+--------------------+\n|summary|             authors|\n+-------+--------------------+\n|  count|               13719|\n|   mean|                null|\n| stddev|                null|\n|    min|A.B. Yehoshua-Hil...|\n|    max|Éric-Emmanuel Sch...|\n+-------+--------------------+\n\n+-------+--------------------+\n|summary|      average_rating|\n+-------+--------------------+\n|  count|               13719|\n|   mean|  3.9306198045792398|\n| stddev|   0.357893063472285|\n|    min| Jr.-C.S. Lewis-P...|\n|    max|                5.00|\n+-------+--------------------+\n\n+-------+--------------------+\n|summary|                isbn|\n+-------+--------------------+\n|  count|               13719|\n|   mean| 1.039560314259837E9|\n| stddev|1.5971389842051237E9|\n|    min|                0.00|\n|    max|          9998691567|\n+-------+--------------------+\n\n+-------+--------------------+\n|summary|              isbn13|\n+-------+--------------------+\n|  count|               13719|\n|   mean|9.761170523550744E12|\n| stddev|4.321517728363313E11|\n|    min|       0008987059752|\n|    max|       9790007672386|\n+-------+--------------------+\n\n+-------+-------------------+\n|summary|      language_code|\n+-------+-------------------+\n|  count|              13719|\n|   mean| 9.7813082527492E12|\n| stddev|5.142332110626742E8|\n|    min|      9780674842113|\n|    max|                zho|\n+-------+-------------------+\n\n+-------+------------------+\n|summary|         num_pages|\n+-------+------------------+\n|  count|             13719|\n|   mean| 342.4027271401487|\n| stddev|252.65016483845298|\n|    min|                 0|\n|    max|               eng|\n+-------+------------------+\n\n+-------+------------------+\n|summary|     ratings_count|\n+-------+------------------+\n|  count|             13719|\n|   mean| 17759.02529338873|\n| stddev|112937.13120992463|\n|    min|                 0|\n|    max|           5629932|\n+-------+------------------+\n\n+-------+------------------+\n|summary|text_reviews_count|\n+-------+------------------+\n|  count|             13719|\n|   mean| 533.6063853050514|\n| stddev| 2528.600315867432|\n|    min|                 0|\n|    max|             93619|\n+-------+------------------+\n\nres74: Seq[Unit] \u003d List((), (), (), (), (), (), (), (), (), ())\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://zeppelin:4040/jobs/job?id\u003d100",
+            "http://zeppelin:4040/jobs/job?id\u003d101",
+            "http://zeppelin:4040/jobs/job?id\u003d102",
+            "http://zeppelin:4040/jobs/job?id\u003d103",
+            "http://zeppelin:4040/jobs/job?id\u003d104",
+            "http://zeppelin:4040/jobs/job?id\u003d105",
+            "http://zeppelin:4040/jobs/job?id\u003d106",
+            "http://zeppelin:4040/jobs/job?id\u003d107",
+            "http://zeppelin:4040/jobs/job?id\u003d108",
+            "http://zeppelin:4040/jobs/job?id\u003d109"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1572297748464_-325720515",
+      "id": "20191028-212228_655299891",
+      "dateCreated": "2019-10-28 21:22:28.464",
+      "dateStarted": "2019-10-29 22:52:56.226",
+      "dateFinished": "2019-10-29 22:53:04.623",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Data Cleansing: Find where the CSV is broken.\n**hint**: Use `df.limit(1000)` as a starting point. And Check the `average_rating` `max` value",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:04.631",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eData Cleansing: Find where the CSV is broken.\u003c/h3\u003e\n\u003cp\u003e\u003cstrong\u003ehint\u003c/strong\u003e: Use \u003ccode\u003edf.limit(1000)\u003c/code\u003e as a starting point. And Check the \u003ccode\u003eaverage_rating\u003c/code\u003e \u003ccode\u003emax\u003c/code\u003e value\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572298151885_397449802",
+      "id": "20191028-212911_18497608",
+      "dateCreated": "2019-10-28 21:29:11.886",
+      "dateStarted": "2019-10-29 22:53:04.752",
+      "dateFinished": "2019-10-29 22:53:04.769",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ncolumnStats(df.select(\"title\").limit(6000))",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:04.852",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+--------------------+\n|summary|               title|\n+-------+--------------------+\n|  count|                6000|\n|   mean|              1880.0|\n| stddev|  120.08885599144219|\n|    min|  said the shotgu...|\n|    max|魔戒首部曲：魔戒現身|\n+-------+--------------------+\n\nres75: Seq[Unit] \u003d List(())\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://zeppelin:4040/jobs/job?id\u003d110"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1572298110787_580138552",
+      "id": "20191028-212830_1786304880",
+      "dateCreated": "2019-10-28 21:28:30.787",
+      "dateStarted": "2019-10-29 22:53:04.910",
+      "dateFinished": "2019-10-29 22:53:09.282",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### hint: Use the min value in the `average_rating` to clean the books.csv\nOr just import `books_clean.csv` and skip this whole process.",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:09.351",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003ehint: Use the min value in the \u003ccode\u003eaverage_rating\u003c/code\u003e to clean the books.csv\u003c/h3\u003e\n\u003cp\u003eOr just import \u003ccode\u003ebooks_clean.csv\u003c/code\u003e and skip this whole process.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572302132946_-2065061791",
+      "id": "20191028-223532_578155414",
+      "dateCreated": "2019-10-28 22:35:32.946",
+      "dateStarted": "2019-10-29 22:53:09.457",
+      "dateFinished": "2019-10-29 22:53:09.480",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Import the Clean Books Dataset",
+      "text": "%spark\nval forSchemaDF \u003d spark.read\n    .format(\"csv\")\n    .option(\"delimiter\",\",\")\n    .option(\"header\", \"true\")\n    .option(\"inferSchema\", \"true\")\n    .load(\"file:///odsc/books_clean.csv\")\n    .toDF(\"bookID\",\"title\",\"authors\",\"average_rating\",\"isbn\",\"isbn13\",\"language_code\",\"num_pages\",\"ratings_count\",\"text_reviews_count\")\nforSchemaDF.printSchema\nval schemaDDL \u003d forSchemaDF.schema.toDDL\n\nval correctSchema \u003d StructType.fromDDL(schemaDDL)\n\nval df \u003d spark.read\n    .format(\"csv\")\n    .option(\"delimiter\",\",\")\n    .option(\"header\", \"true\")\n    .option(\"inferSchema\", \"false\")\n    .schema(correctSchema)\n    .load(\"file:///odsc/books_clean.csv\")\n    .toDF(\"bookID\",\"title\",\"authors\",\"average_rating\",\"isbn\",\"isbn13\",\"language_code\",\"num_pages\",\"ratings_count\",\"text_reviews_count\")\n\ndf.createOrReplaceTempView(\"books\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:09.544",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- bookID: integer (nullable \u003d true)\n |-- title: string (nullable \u003d true)\n |-- authors: string (nullable \u003d true)\n |-- average_rating: double (nullable \u003d true)\n |-- isbn: string (nullable \u003d true)\n |-- isbn13: long (nullable \u003d true)\n |-- language_code: string (nullable \u003d true)\n |-- num_pages: integer (nullable \u003d true)\n |-- ratings_count: integer (nullable \u003d true)\n |-- text_reviews_count: integer (nullable \u003d true)\n\nforSchemaDF: org.apache.spark.sql.DataFrame \u003d [bookID: int, title: string ... 8 more fields]\nschemaDDL: String \u003d `bookID` INT,`title` STRING,`authors` STRING,`average_rating` DOUBLE,`isbn` STRING,`isbn13` BIGINT,`language_code` STRING,`num_pages` INT,`ratings_count` INT,`text_reviews_count` INT\ncorrectSchema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(bookID,IntegerType,true), StructField(title,StringType,true), StructField(authors,StringType,true), StructField(average_rating,DoubleType,true), StructField(isbn,StringType,true), StructField(isbn13,LongType,true), StructField(language_code,StringType,true), StructField(num_pages,IntegerType,true), StructField(ratings_count,IntegerType,true), StructField(text_reviews_count,IntegerType,true))\ndf: org.apache.spark.sql.Dat..."
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://zeppelin:4040/jobs/job?id\u003d111",
+            "http://zeppelin:4040/jobs/job?id\u003d112"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1572297777757_879012840",
+      "id": "20191028-212257_1356527838",
+      "dateCreated": "2019-10-28 21:22:57.757",
+      "dateStarted": "2019-10-29 22:53:09.648",
+      "dateFinished": "2019-10-29 22:53:14.211",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndef calculateColumnAggregates(df: DataFrame) \u003d {\n  val dfs \u003d df.schema.map { r \u003d\u003e\n    val name \u003d r.name\n    val colData \u003d df.select(col(name)).where(col(name).isNotNull)\n    colData.agg(\n        lit(name) as \"colname\",\n        count(name) as \"count\",\n        min(name) as \"min\",\n        avg(name) as \"avg\",\n        stddev_pop(name) as \"sd_pop\",\n        stddev_samp(name) as \"sd_sample\",\n        max(name) as \"max\"\n    ).toDF(\"column\", \"count\", \"min\", \"avg\", \"sd_pop\", \"sd_sample\", \"max\")\n  }\n  val toFold \u003d dfs.splitAt(1)\n  toFold._2.fold(toFold._1.head)(_.union(_)).toDF(\"column\", \"count\", \"min\", \"avg\", \"sd_pop\", \"sd_sample\", \"max\")\n}",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:14.258",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "calculateColumnAggregates: (df: org.apache.spark.sql.DataFrame)org.apache.spark.sql.DataFrame\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572303186880_135092792",
+      "id": "20191028-225306_685360575",
+      "dateCreated": "2019-10-28 22:53:06.881",
+      "dateStarted": "2019-10-29 22:53:14.342",
+      "dateFinished": "2019-10-29 22:53:18.113",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval transformed \u003d df.transform(calculateColumnAggregates)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:18.173",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "transformed: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [column: string, count: bigint ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572302959192_-1180295937",
+      "id": "20191028-224919_875811623",
+      "dateCreated": "2019-10-28 22:49:19.192",
+      "dateStarted": "2019-10-29 22:53:18.269",
+      "dateFinished": "2019-10-29 22:53:22.676",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ntransformed.show",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:22.687",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------------+-----+--------------------+--------------------+--------------------+--------------------+--------------------+\n|            column|count|                 min|                 avg|              sd_pop|           sd_sample|                 max|\n+------------------+-----+--------------------+--------------------+--------------------+--------------------+--------------------+\n|            bookID|13719|                   1|  22160.579269626065|  13699.104049046236|  13699.603351218657|               47709|\n|             title|13719|\"A\" Is for Abduct...|              1900.8|  101.89877329978023|  113.92629196107458|魔戒首部曲：魔戒現身|\n|           authors|13719|A.B. Yehoshua-Hil...|                null|                null|                null|          Zoë Heller|\n|    average_rating|13719|                 0.0|  3.9302645965449154| 0.35941851738651354| 0.35943161739990825|                 5.0|\n|              isbn|13719|          000100039X|1.0400414419183592E9|1.5970322791529374E9|1.5970961336252508E9|          9998691567|\n|            isbn13|13719|          8987059752|9.764023529842604E12|3.986808723515777...|3.986954033913417...|       9790007672386|\n|     language_code|13719|                 ale|                null|                null|                null|                 zho|\n|         num_pages|13719|                   0|   342.3807128799475|  252.60968004206282|  252.61888710856644|                6576|\n|     ratings_count|13719|                   0|   17759.09126029594|  112933.00608063104|  112937.12223998511|             5629932|\n|text_reviews_count|13719|                   0|   533.4399008674102|  2528.4736441251484|  2528.5658014209025|               93619|\n+------------------+-----+--------------------+--------------------+--------------------+--------------------+--------------------+\n\n"
+          }
+        ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://zeppelin:4040/jobs/job?id\u003d113",
+            "http://zeppelin:4040/jobs/job?id\u003d114",
+            "http://zeppelin:4040/jobs/job?id\u003d115"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1572303946279_1991130333",
+      "id": "20191028-230546_1200964219",
+      "dateCreated": "2019-10-28 23:05:46.280",
+      "dateStarted": "2019-10-29 22:53:22.803",
+      "dateFinished": "2019-10-29 22:53:30.510",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Now that the Data is more or less fixed.\n1. Save the csv. For this example we are using Parquet",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:30.574",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eNow that the Data is more or less fixed.\u003c/h3\u003e\n\u003col\u003e\n  \u003cli\u003eSave the csv. For this example we are using Parquet\u003c/li\u003e\n\u003c/ol\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572304947316_1571430230",
+      "id": "20191028-232227_267452647",
+      "dateCreated": "2019-10-28 23:22:27.316",
+      "dateStarted": "2019-10-29 22:53:30.658",
+      "dateFinished": "2019-10-29 22:53:30.702",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndf.write.mode(\"overwrite\").parquet(\"/odsc/books_clean.parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:30.758",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://zeppelin:4040/jobs/job?id\u003d116"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "apps": [],
+      "jobName": "paragraph_1572303961899_1255373251",
+      "id": "20191028-230601_1825955162",
+      "dateCreated": "2019-10-28 23:06:01.899",
+      "dateStarted": "2019-10-29 22:53:30.848",
+      "dateFinished": "2019-10-29 22:53:36.673",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### What we just learned\n1. How to create functions to find missing and distinct values\n2. How to generate column statistics using the `DataFrame.agg` function\n3. How to look for misimported data and fix it (Data Cleaning)\n4. How to write these efforts back to disk. `df.write`\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:36.703",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eWhat we just learned\u003c/h3\u003e\n\u003col\u003e\n  \u003cli\u003eHow to create functions to find missing and distinct values\u003c/li\u003e\n  \u003cli\u003eHow to generate column statistics using the \u003ccode\u003eDataFrame.agg\u003c/code\u003e function\u003c/li\u003e\n  \u003cli\u003eHow to look for misimported data and fix it (Data Cleaning)\u003c/li\u003e\n  \u003cli\u003eHow to write these efforts back to disk. \u003ccode\u003edf.write\u003c/code\u003e\u003c/li\u003e\n\u003c/ol\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572305041874_909767142",
+      "id": "20191028-232401_1826115568",
+      "dateCreated": "2019-10-28 23:24:01.874",
+      "dateStarted": "2019-10-29 22:53:36.755",
+      "dateFinished": "2019-10-29 22:53:36.778",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n### Up Next\n1. Learn how to use Exploratory Data Analysis techniques to find patterns in the data\n2. Use `K-Means Clustering` to attempt to group books into distinct categories\n\nhttp://localhost:8080/#/notebook/2ESU4XURC",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:36.850",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eUp Next\u003c/h3\u003e\n\u003col\u003e\n  \u003cli\u003eLearn how to use Exploratory Data Analysis techniques to find patterns in the data\u003c/li\u003e\n  \u003cli\u003eUse \u003ccode\u003eK-Means Clustering\u003c/code\u003e to attempt to group books into distinct categories\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e\u003ca href\u003d\"http://localhost:8080/#/notebook/2ESU4XURC\"\u003ehttp://localhost:8080/#/notebook/2ESU4XURC\u003c/a\u003e\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572305314940_429984409",
+      "id": "20191028-232834_1961855414",
+      "dateCreated": "2019-10-28 23:28:34.940",
+      "dateStarted": "2019-10-29 22:53:36.974",
+      "dateFinished": "2019-10-29 22:53:36.986",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 22:53:36.852",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1572389616850_-1832252558",
+      "id": "20191029-225336_937936889",
+      "dateCreated": "2019-10-29 22:53:36.850",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "ODSC/2-SparkIntro-ColumnStats",
+  "id": "2ET3A2ZBC",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}
