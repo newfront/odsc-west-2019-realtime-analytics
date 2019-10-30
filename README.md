@@ -64,3 +64,13 @@ Updated the following key/values
 #### Update the Dependencies (under the dependencies section)
 1. Add `com.redislabs:spark-redis:2.4.0`
 2. Click `Save` and these settings will be applied to the Zeppelin Runtime.
+
+#### Sending User Book Likes via Redis Streams
+~~~
+docker exec -it redis5 redis-cli
+~~~
+~~~
+xadd books-liked * userId 1 bookId 3
+~~~
+
+These events will now be preocessed in spark-2.4.4 `foreachBatch`

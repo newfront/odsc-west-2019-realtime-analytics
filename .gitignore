@@ -11,3 +11,4 @@ docker/logs/*.log.*
 docker/data/dump.rdb
 docker/data/*.json
 docker/data/*.parquet
+docker/data/recommendations/*
