@@ -12,7 +12,7 @@ BOOK_DATASET_COMPRESSED='goodreadsbooks.zip'
 function installSpark() {
     echo "using curl to download spark 2.4.4"
     mkdir ${PWD}/install
-    curl -XGET http://mirror.cc.columbia.edu/pub/software/apache/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz > ${PWD}/install/spark-2.4.4.tgz
+    curl -XGET http://apache.osuosl.org/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz > ${PWD}/install/spark-2.4.4.tgz
     cd ${PWD}/install && tar -xvzf spark-2.4.4.tgz && rm spark-2.4.4.tgz
     mv spark-2.4.4-bin-hadoop2.7 ../spark-2.4.4
     cd ..
