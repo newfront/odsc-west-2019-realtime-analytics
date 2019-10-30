@@ -4,7 +4,7 @@
       "title": "Import Classes, and Dataset",
       "text": "%spark\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._\nimport spark.implicits._\n\n/* import the goodreads dataset - all data is located at /odsc root folder in the docker container */\n\nval df \u003d spark.read\n    .format(\"csv\")\n    .option(\"delimiter\",\",\")\n    .option(\"header\", \"true\")\n    .option(\"inferSchema\", \"true\")\n    .load(\"file:///odsc/books.csv\")\n    .toDF(\"bookID\",\"title\",\"authors\",\"average_rating\",\"isbn\",\"isbn13\",\"language_code\",\"num_pages\",\"ratings_count\",\"text_reviews_count\")\n",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:49:22.156",
+      "dateUpdated": "2019-10-29 23:48:39.301",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -39,8 +39,8 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d77",
-            "http://zeppelin:4040/jobs/job?id\u003d78"
+            "http://zeppelin:4040/jobs/job?id\u003d0",
+            "http://zeppelin:4040/jobs/job?id\u003d1"
           ],
           "interpreterSettingId": "spark"
         }
@@ -49,8 +49,8 @@
       "jobName": "paragraph_1572294569545_858279727",
       "id": "20191028-202929_423714762",
       "dateCreated": "2019-10-28 20:29:29.545",
-      "dateStarted": "2019-10-29 22:49:22.238",
-      "dateFinished": "2019-10-29 22:49:36.958",
+      "dateStarted": "2019-10-29 23:48:39.499",
+      "dateFinished": "2019-10-29 23:49:06.129",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -58,7 +58,7 @@
       "title": "The DataFrame schema is your Friend",
       "text": "%spark\ndf.printSchema\nval inferedSchema \u003d df.schema.toDDL",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:49:36.994",
+      "dateUpdated": "2019-10-29 23:49:06.216",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -90,8 +90,8 @@
       "jobName": "paragraph_1572294663307_590510048",
       "id": "20191028-203103_1204063644",
       "dateCreated": "2019-10-28 20:31:03.307",
-      "dateStarted": "2019-10-29 22:49:37.088",
-      "dateFinished": "2019-10-29 22:49:41.355",
+      "dateStarted": "2019-10-29 23:49:06.338",
+      "dateFinished": "2019-10-29 23:49:06.697",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -99,7 +99,7 @@
       "title": "A little about StructType",
       "text": "%spark\nval structFromDDL \u003d StructType.fromDDL(inferedSchema)",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:49:41.381",
+      "dateUpdated": "2019-10-29 23:49:06.742",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -131,8 +131,8 @@
       "jobName": "paragraph_1572295514338_1485281078",
       "id": "20191028-204514_482530945",
       "dateCreated": "2019-10-28 20:45:14.338",
-      "dateStarted": "2019-10-29 22:49:41.468",
-      "dateFinished": "2019-10-29 22:49:45.328",
+      "dateStarted": "2019-10-29 23:49:06.866",
+      "dateFinished": "2019-10-29 23:49:07.562",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -140,7 +140,7 @@
       "title": "Reload the Dataset without Schema Inference. BYO-Schema",
       "text": "%spark\nval df \u003d spark.read\n    .format(\"csv\")\n    .option(\"delimiter\",\",\")\n    .option(\"header\", \"true\")\n    .option(\"inferSchema\", \"false\")\n    .schema(structFromDDL)\n    .load(\"file:///odsc/books.csv\")\n    .toDF(\"bookID\",\"title\",\"authors\",\"average_rating\",\"isbn\",\"isbn13\",\"language_code\",\"num_pages\",\"ratings_count\",\"text_reviews_count\")",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:49:45.358",
+      "dateUpdated": "2019-10-29 23:49:07.570",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -172,8 +172,8 @@
       "jobName": "paragraph_1572295565385_-66796076",
       "id": "20191028-204605_862486736",
       "dateCreated": "2019-10-28 20:46:05.386",
-      "dateStarted": "2019-10-29 22:49:45.450",
-      "dateFinished": "2019-10-29 22:49:49.350",
+      "dateStarted": "2019-10-29 23:49:07.693",
+      "dateFinished": "2019-10-29 23:49:08.106",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -181,7 +181,7 @@
       "title": "Create a temporary SQL view",
       "text": "%spark\ndf.createOrReplaceTempView(\"books\")",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:49:49.381",
+      "dateUpdated": "2019-10-29 23:49:08.185",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -208,8 +208,8 @@
       "jobName": "paragraph_1572294865739_-537940839",
       "id": "20191028-203425_1245053853",
       "dateCreated": "2019-10-28 20:34:25.739",
-      "dateStarted": "2019-10-29 22:49:49.459",
-      "dateFinished": "2019-10-29 22:49:53.100",
+      "dateStarted": "2019-10-29 23:49:08.272",
+      "dateFinished": "2019-10-29 23:49:08.503",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -217,7 +217,7 @@
       "title": "Look at the SQL based Schema",
       "text": "%sql\ndesc books",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:49:53.179",
+      "dateUpdated": "2019-10-29 23:49:08.556",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -283,8 +283,8 @@
       "jobName": "paragraph_1572295265978_-68703073",
       "id": "20191028-204105_1657554365",
       "dateCreated": "2019-10-28 20:41:05.978",
-      "dateStarted": "2019-10-29 22:49:53.212",
-      "dateFinished": "2019-10-29 22:49:53.361",
+      "dateStarted": "2019-10-29 23:49:08.596",
+      "dateFinished": "2019-10-29 23:49:08.930",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -292,7 +292,7 @@
       "title": "Quickly explore the Data with a Simple TableView",
       "text": "%sql\nselect * from books",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:49:53.411",
+      "dateUpdated": "2019-10-29 23:49:08.996",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -368,7 +368,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d79"
+            "http://zeppelin:4040/jobs/job?id\u003d2"
           ],
           "interpreterSettingId": "spark"
         }
@@ -377,15 +377,15 @@
       "jobName": "paragraph_1572295256622_-394023868",
       "id": "20191028-204056_1747127141",
       "dateCreated": "2019-10-28 20:40:56.622",
-      "dateStarted": "2019-10-29 22:49:53.491",
-      "dateFinished": "2019-10-29 22:49:54.231",
+      "dateStarted": "2019-10-29 23:49:09.071",
+      "dateFinished": "2019-10-29 23:49:09.816",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### What we have learned so far\n1. How to load a dataset\n2. How to infer the underlying schema\n3. How to export the schema to a DDL and reconstruct a StructType from the DDL string\n4. How to reload a dataset using the exported DDL **(StructType.fromDDL)**\n5. How to Create a temp SQL Viewq **createOrReplaceTempView**\n6. Lastly how to quickly explore the data via a TableView",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:49:54.295",
+      "dateUpdated": "2019-10-29 23:49:09.877",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -418,15 +418,15 @@
       "jobName": "paragraph_1572295696943_-1026691099",
       "id": "20191028-204816_1139265124",
       "dateCreated": "2019-10-28 20:48:16.943",
-      "dateStarted": "2019-10-29 22:49:54.353",
-      "dateFinished": "2019-10-29 22:49:54.472",
+      "dateStarted": "2019-10-29 23:49:09.924",
+      "dateFinished": "2019-10-29 23:49:13.069",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Up Next: How to quickly explore the data to accomplish the following\n1. Look for missing values\n2. Look for distinct values within each column across all rows (eg: cardinality test)\n3. Check the columnar statistics (min/avg/max across numeric as well as lexographic ordering)\n4. Fix the underlying types (if you scan the schema you will find some incorrect types)",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:49:54.550",
+      "dateUpdated": "2019-10-29 23:49:13.154",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -459,15 +459,15 @@
       "jobName": "paragraph_1572295674294_94620789",
       "id": "20191028-204754_823466942",
       "dateCreated": "2019-10-28 20:47:54.294",
-      "dateStarted": "2019-10-29 22:49:54.599",
-      "dateFinished": "2019-10-29 22:49:54.629",
+      "dateStarted": "2019-10-29 23:49:13.198",
+      "dateFinished": "2019-10-29 23:49:13.215",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Intro Part 2\nUp Next: [2-SparkIntro-ColumnStats](http://localhost:8080/#/notebook/2ET3A2ZBC)",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 22:50:52.046",
+      "dateUpdated": "2019-10-29 23:49:13.297",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -500,9 +500,25 @@
       "jobName": "paragraph_1572296059557_1258052178",
       "id": "20191028-205419_1503275317",
       "dateCreated": "2019-10-28 20:54:19.557",
-      "dateStarted": "2019-10-29 22:50:52.053",
-      "dateFinished": "2019-10-29 22:50:52.070",
+      "dateStarted": "2019-10-29 23:49:13.351",
+      "dateFinished": "2019-10-29 23:49:13.361",
       "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-29 23:49:13.299",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1572392953297_282609993",
+      "id": "20191029-234913_15535773",
+      "dateCreated": "2019-10-29 23:49:13.297",
+      "status": "READY",
       "progressUpdateIntervalMs": 500
     }
   ],

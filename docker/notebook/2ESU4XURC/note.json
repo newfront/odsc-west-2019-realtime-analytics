@@ -3,7 +3,7 @@
     {
       "text": "%md\nThe dataset for this Notebook is generated [here](http://localhost:8080/#/notebook/2EQFEJF47). Please click `Run All Paragraphs` on that Notebook to generate the parquet file.",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:11.312",
+      "dateUpdated": "2019-10-29 23:59:03.785",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -36,15 +36,15 @@
       "jobName": "paragraph_1572305545787_-1517615861",
       "id": "20191028-233225_1458893101",
       "dateCreated": "2019-10-28 23:32:25.788",
-      "dateStarted": "2019-10-29 23:04:11.391",
-      "dateFinished": "2019-10-29 23:04:11.411",
+      "dateStarted": "2019-10-29 23:59:03.820",
+      "dateFinished": "2019-10-29 23:59:03.830",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\n\nval df \u003d spark.read.parquet(\"/odsc/books_clean.parquet\")\ndf.createOrReplaceTempView(\"books\")\ndf.printSchema",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:11.488",
+      "dateUpdated": "2019-10-29 23:59:03.921",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -78,7 +78,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d117"
+            "http://zeppelin:4040/jobs/job?id\u003d0"
           ],
           "interpreterSettingId": "spark"
         }
@@ -87,8 +87,8 @@
       "jobName": "paragraph_1572305482326_-1394269164",
       "id": "20191028-233122_539808973",
       "dateCreated": "2019-10-28 23:31:22.327",
-      "dateStarted": "2019-10-29 23:04:11.538",
-      "dateFinished": "2019-10-29 23:04:15.882",
+      "dateStarted": "2019-10-29 23:59:03.960",
+      "dateFinished": "2019-10-29 23:59:28.640",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -96,7 +96,7 @@
       "title": "Explore the Highest Rated Books",
       "text": "%sql\nselect bookId, title, authors, average_rating, num_pages, ratings_count, text_reviews_count from books order by average_rating DESC limit 800",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:15.947",
+      "dateUpdated": "2019-10-29 23:59:28.685",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -257,7 +257,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d118"
+            "http://zeppelin:4040/jobs/job?id\u003d1"
           ],
           "interpreterSettingId": "spark"
         }
@@ -266,15 +266,15 @@
       "jobName": "paragraph_1572305537607_386221289",
       "id": "20191028-233217_1861989384",
       "dateCreated": "2019-10-28 23:32:17.607",
-      "dateStarted": "2019-10-29 23:04:16.034",
-      "dateFinished": "2019-10-29 23:04:16.748",
+      "dateStarted": "2019-10-29 23:59:28.742",
+      "dateFinished": "2019-10-29 23:59:31.585",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Observations\n1. Books without a large number of ratings are easily skewed\n2. Let\u0027s figure out how many average number of ratings exist for each average_rating",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:16.852",
+      "dateUpdated": "2019-10-29 23:59:31.662",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -307,15 +307,15 @@
       "jobName": "paragraph_1572305847892_-280111570",
       "id": "20191028-233727_764381538",
       "dateCreated": "2019-10-28 23:37:27.892",
-      "dateStarted": "2019-10-29 23:04:16.918",
-      "dateFinished": "2019-10-29 23:04:16.941",
+      "dateStarted": "2019-10-29 23:59:31.691",
+      "dateFinished": "2019-10-29 23:59:31.699",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\nselect\n  count(*) as total,\n  avg(ratings_count) as avg_rating_count,\n  average_rating from books\n  where average_rating \u003e\u003d 5.0\n  group by average_rating",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:17.017",
+      "dateUpdated": "2019-10-29 23:59:31.791",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -383,11 +383,11 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d119",
-            "http://zeppelin:4040/jobs/job?id\u003d120",
-            "http://zeppelin:4040/jobs/job?id\u003d121",
-            "http://zeppelin:4040/jobs/job?id\u003d122",
-            "http://zeppelin:4040/jobs/job?id\u003d123"
+            "http://zeppelin:4040/jobs/job?id\u003d2",
+            "http://zeppelin:4040/jobs/job?id\u003d3",
+            "http://zeppelin:4040/jobs/job?id\u003d4",
+            "http://zeppelin:4040/jobs/job?id\u003d5",
+            "http://zeppelin:4040/jobs/job?id\u003d6"
           ],
           "interpreterSettingId": "spark"
         }
@@ -396,8 +396,8 @@
       "jobName": "paragraph_1572307600621_-1634448316",
       "id": "20191029-000640_1823730880",
       "dateCreated": "2019-10-29 00:06:40.621",
-      "dateStarted": "2019-10-29 23:04:17.094",
-      "dateFinished": "2019-10-29 23:04:21.997",
+      "dateStarted": "2019-10-29 23:59:31.831",
+      "dateFinished": "2019-10-29 23:59:35.101",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -405,7 +405,7 @@
       "title": "Manually Bucketize the discrete ranges of average_ratings",
       "text": "%spark\n\nval conditional_bucketing \u003d df.withColumn(\"rating_group\",\n  when(col(\"average_rating\") \u003c 1.0, 0).\n  when(col(\"average_rating\") \u003c 2.0, 1).\n  when(col(\"average_rating\") \u003c 3.0, 2).\n  when(col(\"average_rating\") \u003c 4.0, 3).\n  when(col(\"average_rating\") \u003c 5.0, 4).\n  otherwise(5)\n)\n\nconditional_bucketing.createOrReplaceTempView(\"books_bucketed_conditionally\")\n",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:22.052",
+      "dateUpdated": "2019-10-29 23:59:35.147",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -437,8 +437,8 @@
       "jobName": "paragraph_1572307785864_534957059",
       "id": "20191029-000945_1910171196",
       "dateCreated": "2019-10-29 00:09:45.864",
-      "dateStarted": "2019-10-29 23:04:22.261",
-      "dateFinished": "2019-10-29 23:04:26.728",
+      "dateStarted": "2019-10-29 23:59:35.183",
+      "dateFinished": "2019-10-29 23:59:35.900",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -446,7 +446,7 @@
       "title": "Take a look at the Percentiles across each discrete bucket",
       "text": "%sql\nselect rating_group,\n  count(*) as total,\n  percentile_approx(ratings_count, 0.10) as p10,\n  percentile_approx(ratings_count, 0.25) as p25,\n  percentile_approx(ratings_count, 0.50) as p50,\n  percentile_approx(ratings_count, 0.75) as p75,\n  percentile_approx(ratings_count, 0.90) as p90\n  from books_bucketed_conditionally\n  group by rating_group\n  order by rating_group asc",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:26.797",
+      "dateUpdated": "2019-10-29 23:59:35.988",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -519,7 +519,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d124"
+            "http://zeppelin:4040/jobs/job?id\u003d7"
           ],
           "interpreterSettingId": "spark"
         }
@@ -528,8 +528,8 @@
       "jobName": "paragraph_1572306887904_679032777",
       "id": "20191028-235447_1172499985",
       "dateCreated": "2019-10-28 23:54:47.905",
-      "dateStarted": "2019-10-29 23:04:26.923",
-      "dateFinished": "2019-10-29 23:04:29.959",
+      "dateStarted": "2019-10-29 23:59:36.019",
+      "dateFinished": "2019-10-29 23:59:38.163",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -537,7 +537,7 @@
       "title": "Using the SparkML Bucketizer to split easier",
       "text": "%spark\nimport org.apache.spark.ml.feature.Bucketizer\n\nval bucketizer \u003d new Bucketizer()\n .setInputCol(\"average_rating\")\n .setOutputCol(\"rating_group\")\n .setSplits(Array(0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0))\n\nval bucketed \u003d bucketizer.transform(df)\nbucketed.createOrReplaceTempView(\"books_bucketed\")",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:30.052",
+      "dateUpdated": "2019-10-29 23:59:38.226",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -561,7 +561,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "import org.apache.spark.ml.feature.Bucketizer\nbucketizer: org.apache.spark.ml.feature.Bucketizer \u003d bucketizer_be3d20f2dda8\nbucketed: org.apache.spark.sql.DataFrame \u003d [bookID: int, title: string ... 9 more fields]\n"
+            "data": "import org.apache.spark.ml.feature.Bucketizer\nbucketizer: org.apache.spark.ml.feature.Bucketizer \u003d bucketizer_e33f57e0a288\nbucketed: org.apache.spark.sql.DataFrame \u003d [bookID: int, title: string ... 9 more fields]\n"
           }
         ]
       },
@@ -569,8 +569,8 @@
       "jobName": "paragraph_1572306033030_-290640446",
       "id": "20191028-234033_1957173001",
       "dateCreated": "2019-10-28 23:40:33.030",
-      "dateStarted": "2019-10-29 23:04:30.139",
-      "dateFinished": "2019-10-29 23:04:34.752",
+      "dateStarted": "2019-10-29 23:59:38.265",
+      "dateFinished": "2019-10-29 23:59:39.332",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -578,7 +578,7 @@
       "title": "Easily find out which Tables you have created",
       "text": "%spark\nspark.catalog.listTables.show(false)",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:34.819",
+      "dateUpdated": "2019-10-29 23:59:39.370",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -602,7 +602,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "+----------------------------+--------+-----------+---------+-----------+\n|name                        |database|description|tableType|isTemporary|\n+----------------------------+--------+-----------+---------+-----------+\n|author_genres               |null    |null       |TEMPORARY|true       |\n|book_authors                |null    |null       |TEMPORARY|true       |\n|book_details                |null    |null       |TEMPORARY|true       |\n|book_genres                 |null    |null       |TEMPORARY|true       |\n|books                       |null    |null       |TEMPORARY|true       |\n|books_bucketed              |null    |null       |TEMPORARY|true       |\n|books_bucketed_conditionally|null    |null       |TEMPORARY|true       |\n|details                     |null    |null       |TEMPORARY|true       |\n|filtered                    |null    |null       |TEMPORARY|true       |\n|genres_ranked               |null    |null       |TEMPORARY|true       |\n+----------------------------+--------+-----------+---------+-----------+\n\n"
+            "data": "+----------------------------+--------+-----------+---------+-----------+\n|name                        |database|description|tableType|isTemporary|\n+----------------------------+--------+-----------+---------+-----------+\n|books                       |null    |null       |TEMPORARY|true       |\n|books_bucketed              |null    |null       |TEMPORARY|true       |\n|books_bucketed_conditionally|null    |null       |TEMPORARY|true       |\n+----------------------------+--------+-----------+---------+-----------+\n\n"
           }
         ]
       },
@@ -610,15 +610,15 @@
       "jobName": "paragraph_1572306239230_1660667225",
       "id": "20191028-234359_1712016301",
       "dateCreated": "2019-10-28 23:43:59.230",
-      "dateStarted": "2019-10-29 23:04:34.877",
-      "dateFinished": "2019-10-29 23:04:38.763",
+      "dateStarted": "2019-10-29 23:59:39.402",
+      "dateFinished": "2019-10-29 23:59:39.981",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\nselect rating_group, count(*) as total from books_bucketed group by rating_group order by total DESC",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:38.824",
+      "dateUpdated": "2019-10-29 23:59:40.003",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -685,7 +685,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d125"
+            "http://zeppelin:4040/jobs/job?id\u003d8"
           ],
           "interpreterSettingId": "spark"
         }
@@ -694,15 +694,15 @@
       "jobName": "paragraph_1572306281254_1165024437",
       "id": "20191028-234441_472624865",
       "dateCreated": "2019-10-28 23:44:41.255",
-      "dateStarted": "2019-10-29 23:04:38.907",
-      "dateFinished": "2019-10-29 23:04:42.155",
+      "dateStarted": "2019-10-29 23:59:40.049",
+      "dateFinished": "2019-10-29 23:59:41.696",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Use the rating_group to explore within each group\n1. Find the percentiles (25th, 50th, 75th and 90th) of `ratings_count` to see how to be honest about a books rating\n2. What does this tell us about the skew of the ratings?",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:42.243",
+      "dateUpdated": "2019-10-29 23:59:41.757",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -735,15 +735,15 @@
       "jobName": "paragraph_1572306523002_922109034",
       "id": "20191028-234843_1234269314",
       "dateCreated": "2019-10-28 23:48:43.002",
-      "dateStarted": "2019-10-29 23:04:42.318",
-      "dateFinished": "2019-10-29 23:04:42.334",
+      "dateStarted": "2019-10-29 23:59:41.789",
+      "dateFinished": "2019-10-29 23:59:41.801",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\nselect rating_group,\n  count(*) as total,\n  percentile_approx(ratings_count, 0.10) as p10,\n  percentile_approx(ratings_count, 0.25) as p25,\n  percentile_approx(ratings_count, 0.50) as p50,\n  percentile_approx(ratings_count, 0.75) as p75,\n  percentile_approx(ratings_count, 0.90) as p90\n  from books_bucketed\n  group by rating_group\n  order by rating_group asc",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:42.417",
+      "dateUpdated": "2019-10-29 23:59:41.890",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -815,7 +815,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d126"
+            "http://zeppelin:4040/jobs/job?id\u003d9"
           ],
           "interpreterSettingId": "spark"
         }
@@ -824,15 +824,15 @@
       "jobName": "paragraph_1572308273402_-1344925432",
       "id": "20191029-001753_47511964",
       "dateCreated": "2019-10-29 00:17:53.402",
-      "dateStarted": "2019-10-29 23:04:42.505",
-      "dateFinished": "2019-10-29 23:04:45.845",
+      "dateStarted": "2019-10-29 23:59:41.927",
+      "dateFinished": "2019-10-29 23:59:43.433",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\nselect average_rating, rating_group, text_reviews_count from books_bucketed where ratings_count \u003e 4 order by ratings_count asc",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:45.932",
+      "dateUpdated": "2019-10-29 23:59:43.528",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -928,7 +928,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d127"
+            "http://zeppelin:4040/jobs/job?id\u003d10"
           ],
           "interpreterSettingId": "spark"
         }
@@ -937,15 +937,15 @@
       "jobName": "paragraph_1572306934476_1194426392",
       "id": "20191028-235534_726715151",
       "dateCreated": "2019-10-28 23:55:34.476",
-      "dateStarted": "2019-10-29 23:04:46.030",
-      "dateFinished": "2019-10-29 23:04:46.598",
+      "dateStarted": "2019-10-29 23:59:43.559",
+      "dateFinished": "2019-10-29 23:59:43.922",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### What have we learned?\n1. That Reviews done on Good Reads can be trusted if the number of reviews on a book is greater than a minimal threshold\n2. In the case of books scored between (3.0-4.0] and [4.0 - 5.0) (falling into buckets 3 and 4). We can use the p10 of 18 to initially filter groups 3/4\n3. We will need to look to see how many text based reviews are left on these books to. The logic being people who loved or hated a book enough leave a review.\n",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:46.636",
+      "dateUpdated": "2019-10-29 23:59:43.960",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -978,8 +978,8 @@
       "jobName": "paragraph_1572324721893_-526188414",
       "id": "20191029-045201_1798059547",
       "dateCreated": "2019-10-29 04:52:01.893",
-      "dateStarted": "2019-10-29 23:04:46.786",
-      "dateFinished": "2019-10-29 23:04:46.811",
+      "dateStarted": "2019-10-29 23:59:43.990",
+      "dateFinished": "2019-10-29 23:59:44.005",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -987,7 +987,7 @@
       "title": "Take a look at the number of reviews by rating group",
       "text": "%sql\nselect rating_group,\n  count(*) as total,\n  percentile_approx(text_reviews_count, 0.10) as p10,\n  percentile_approx(text_reviews_count, 0.25) as p25,\n  percentile_approx(text_reviews_count, 0.50) as p50,\n  percentile_approx(text_reviews_count, 0.75) as p75,\n  percentile_approx(text_reviews_count, 0.90) as p90\n  from books_bucketed\n  group by rating_group\n  order by p75 desc",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:59.674",
+      "dateUpdated": "2019-10-29 23:59:44.090",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -995,7 +995,7 @@
         "results": {
           "0": {
             "graph": {
-              "mode": "multiBarChart",
+              "mode": "table",
               "height": 300.0,
               "optionOpen": false,
               "setting": {
@@ -1047,8 +1047,8 @@
               ],
               "values": [
                 {
-                  "name": "p25",
-                  "index": 3.0,
+                  "name": "p75",
+                  "index": 5.0,
                   "aggr": "max"
                 }
               ]
@@ -1089,7 +1089,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d128"
+            "http://zeppelin:4040/jobs/job?id\u003d11"
           ],
           "interpreterSettingId": "spark"
         }
@@ -1098,15 +1098,15 @@
       "jobName": "paragraph_1572325986183_-1520533032",
       "id": "20191029-051306_1685314077",
       "dateCreated": "2019-10-29 05:13:06.183",
-      "dateStarted": "2019-10-29 23:04:46.941",
-      "dateFinished": "2019-10-29 23:04:51.186",
+      "dateStarted": "2019-10-29 23:59:44.120",
+      "dateFinished": "2019-10-29 23:59:45.437",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\nselect title, average_rating, rating_group, text_reviews_count from books_bucketed where ratings_count \u003e 4 and text_reviews_count \u003e 7 order by text_reviews_count desc",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:51.219",
+      "dateUpdated": "2019-10-29 23:59:45.526",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1175,7 +1175,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d129"
+            "http://zeppelin:4040/jobs/job?id\u003d12"
           ],
           "interpreterSettingId": "spark"
         }
@@ -1184,15 +1184,15 @@
       "jobName": "paragraph_1572326205997_-1549320265",
       "id": "20191029-051645_1706311475",
       "dateCreated": "2019-10-29 05:16:45.997",
-      "dateStarted": "2019-10-29 23:04:51.395",
-      "dateFinished": "2019-10-29 23:04:52.062",
+      "dateStarted": "2019-10-29 23:59:45.569",
+      "dateFinished": "2019-10-29 23:59:45.921",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\nselect bookID, title, average_rating, text_reviews_count from books_bucketed where rating_group \u003d 4 and ratings_count \u003e 4 and text_reviews_count \u003e 7 order by text_reviews_count desc",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:52.100",
+      "dateUpdated": "2019-10-29 23:59:45.969",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1261,7 +1261,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d130"
+            "http://zeppelin:4040/jobs/job?id\u003d13"
           ],
           "interpreterSettingId": "spark"
         }
@@ -1270,15 +1270,15 @@
       "jobName": "paragraph_1572326563157_-335315627",
       "id": "20191029-052243_78690924",
       "dateCreated": "2019-10-29 05:22:43.157",
-      "dateStarted": "2019-10-29 23:04:52.356",
-      "dateFinished": "2019-10-29 23:04:52.927",
+      "dateStarted": "2019-10-29 23:59:46.029",
+      "dateFinished": "2019-10-29 23:59:46.329",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql\nselect title, average_rating, text_reviews_count from books_bucketed where rating_group \u003d 3 and ratings_count \u003e 4 and text_reviews_count \u003e 7 order by text_reviews_count desc",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:52.955",
+      "dateUpdated": "2019-10-29 23:59:46.429",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1346,7 +1346,7 @@
           "tooltip": "View in Spark web UI",
           "group": "spark",
           "values": [
-            "http://zeppelin:4040/jobs/job?id\u003d131"
+            "http://zeppelin:4040/jobs/job?id\u003d14"
           ],
           "interpreterSettingId": "spark"
         }
@@ -1355,15 +1355,15 @@
       "jobName": "paragraph_1572326832800_158017706",
       "id": "20191029-052712_600116442",
       "dateCreated": "2019-10-29 05:27:12.801",
-      "dateStarted": "2019-10-29 23:04:53.266",
-      "dateFinished": "2019-10-29 23:04:54.100",
+      "dateStarted": "2019-10-29 23:59:46.475",
+      "dateFinished": "2019-10-29 23:59:46.772",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%md\n### Where we have arrived.\n1. This data is missing some crutial information if we want to capture honest reviews (like category, publisher, publish date)\n2. In order to do more with this dataset we have to go back to get more data\n3. Luckily GoodReads has a developer API (and even luckier I\u0027ve already imported more detailed information)\n4. Next we are going to learn how to do ETL (extract, transform, load) Jobs. This helps us build better data to make Recommendations with\n\nUp Next: [4-Spark-ETL](http://localhost:8080/#/notebook/2ERYSKY63)",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:54.167",
+      "dateUpdated": "2019-10-29 23:59:46.775",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1396,8 +1396,8 @@
       "jobName": "paragraph_1572382596247_604348097",
       "id": "20191029-205636_1967596381",
       "dateCreated": "2019-10-29 20:56:36.247",
-      "dateStarted": "2019-10-29 23:04:54.330",
-      "dateFinished": "2019-10-29 23:04:54.371",
+      "dateStarted": "2019-10-29 23:59:46.852",
+      "dateFinished": "2019-10-29 23:59:46.884",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -1405,7 +1405,7 @@
       "title": "How I got the bookIds",
       "text": "%spark\n/*\nval onlyBookIds \u003d df.select(\"bookId\").write.mode(\"overwrite\").json(\"/odsc/bookIds\")\n*/",
       "user": "anonymous",
-      "dateUpdated": "2019-10-29 23:04:54.430",
+      "dateUpdated": "2019-10-29 23:59:46.948",
       "config": {
         "colWidth": 12.0,
         "fontSize": 9.0,
@@ -1432,8 +1432,8 @@
       "jobName": "paragraph_1572326848639_-1127329923",
       "id": "20191029-052728_900064271",
       "dateCreated": "2019-10-29 05:27:28.639",
-      "dateStarted": "2019-10-29 23:04:54.593",
-      "dateFinished": "2019-10-29 23:04:59.505",
+      "dateStarted": "2019-10-29 23:59:46.987",
+      "dateFinished": "2019-10-29 23:59:47.127",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     }

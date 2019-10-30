@@ -32,7 +32,7 @@ Additional Docker Resources:
 ## Installation
 1. Install Docker (See Docker above)
 2. Once Docker is installed. Open up your terminal application and `cd /path/to/odsc-west-2019-realtime-analytics/docker`
-3. `./run.sh init`
+3. `./run.sh install`
 4. `./run.sh start`
 
 ### Notes

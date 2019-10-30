@@ -1,0 +1,44 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark\nimport spark.implicits._",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-30 01:46:28.646",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1572399973922_1146391092",
+      "id": "20191030-014613_860020814",
+      "dateCreated": "2019-10-30 01:46:13.922",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "ODSC/6-SparkML-Conclusion",
+  "id": "2ERYNKXXJ",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {}
+}
